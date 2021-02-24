@@ -45,21 +45,21 @@
                             $tools = $_GET['tools'];
                             $student = $_GET['student'];
                             $sql1 = "insert into project value";
-                            $sql1 .= " ('null','$prg_name_th','$prg_name_th','$prj_stt_en','$prj_ptt_id','$prj_lct_id')";
+                            $sql1 .= " ('null','$prj_name_th','$prj_name_en','$prj_stt_id','$prj_ptt_id','$prj_lct_id')";
                             echo $sql1."<br>";
                             if(mysqli_query($conn,$sql1)){
-                            $prg_id = mysqli_insert_id($conn);
+                            $prj_id = mysqli_insert_id($conn);
                             foreach($tools as $tls){
-                                $sql1 = "insert into project_tools (pjt_prg_id,pjt_tls_id) value";
+                                $sql2 = "insert into project_tools (pjt_prj_id,pjt_tls_id) value";
                                 $sql2 .= "('$prj_id','$tls')";
                                 mysqli_query($conn,$sql2);
                                 echo $sql2."<br>";
                             }
                             foreach($student as $stds){
-                                $sql3 = "insert into project_tools (pjt_prj_id,pjt_std_id) value";
-                                $sql3 .= "('$prj_id','$tls')";
+                                $sql3 = "insert into project_student (pjt_prj_id,pjt_std_id) value";
+                                $sql3 .= "('$prj_id','$stds')";
                                 mysqli_query($conn,$sql2);
-                                echo $sql2."<br>";
+                                echo $sql3."<br>";
                             }
                             
                             echo "บันทึกโปรเจค $prj_name_th เรียบร้อย";
@@ -113,18 +113,18 @@
 
                         
                         <div class="form-group">
-                            <label for="prj_pij_id" class="col-md-2 col-lg-2 control-label">สาขาวิชา</label>
+                            <label for="prj_ptt_id" class="col-md-2 col-lg-2 control-label">ประเภท</label>
                             <div class="col-md-10 col-lg-10">
-                                <select name="prj_pij_id" id="prj_pij_id" class="form-control">
+                                <select name="prj_ptt_id" id="prj_ptt_id" class="form-control">
                                 <?php
                                     include 'connectdb.php';
-                                    $sql =  'SELECT * FROM program '
-                                            . 'order by prg_id';
+                                    $sql =  'SELECT * FROM project_type '
+                                            . 'order by ptt_id';
                                     $result = mysqli_query($conn,$sql);
                                     while (($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) != NULL) {
                                         echo '<option value=';
-                                        echo '"' . $row['prg_id'] . '">';
-                                        echo $row['prg_name'];
+                                        echo '"' . $row['ptt_id'] . '">';
+                                        echo $row['ptt_name'];
                                         echo '</option>';
                                     }
                                     mysqli_free_result($result);
