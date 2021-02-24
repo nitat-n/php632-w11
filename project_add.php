@@ -37,8 +37,8 @@
                     <h4>เพิ่มข้อมูลโครงงาน</h4>
                     <?php
                         if(isset($_GET['submit'])){
-                            $prg_name_th = $_GET['prg_name_th'];
-                            $prg_name_en = $_GET['prg_name_en'];
+                            $prj_name_th = $_GET['prj_name_th'];
+                            $prj_name_en = $_GET['prj_name_en'];
                             $prj_stt_id = $_GET['prj_stt_id'];
                             $prj_ptt_id = $_GET['prj_ptt_id'];
                             $prj_lct_id = $_GET['prj_lct_id'];
@@ -47,6 +47,7 @@
                             $sql1 = "insert into project value";
                             $sql1 .= " ('null','$prj_name_th','$prj_name_en','$prj_stt_id','$prj_ptt_id','$prj_lct_id')";
                             echo $sql1."<br>";
+                            include 'connectdb.php';
                             if(mysqli_query($conn,$sql1)){
                             $prj_id = mysqli_insert_id($conn);
                             foreach($tools as $tls){
@@ -56,7 +57,7 @@
                                 echo $sql2."<br>";
                             }
                             foreach($student as $stds){
-                                $sql3 = "insert into project_student (pjt_prj_id,pjt_std_id) value";
+                                $sql3 = "insert into project_student (pjs_prj_id,pjs_std_id) value";
                                 $sql3 .= "('$prj_id','$stds')";
                                 mysqli_query($conn,$sql2);
                                 echo $sql3."<br>";
@@ -71,9 +72,10 @@
                             
                         }else{
                     ?>
-                    <br>
+                    <form class="form-horizontal" role="form" action="<?php $_SERVER["PHP_SELF"]?>">
+
                         <div class="form-group">
-                            <label for="prg_name_th" class="col-md-2 col-lg-2 control-label">ชื่อโครงงาน(ภาษาไทย)</label>
+                            <label for="prj_name_th" class="col-md-2 col-lg-2 control-label">ชื่อโครงงาน(ภาษาไทย)</label>
                             <div class="col-md-10 col-lg-10"> 
                                 <textarea name="prj_name_th" rows="5" id="prj_name_th" class="form-control"></textarea>
                                 <br>
@@ -81,7 +83,7 @@
                         </div> 
                         <br>   
                         <div class="form-group">
-                            <label for="prg_name_en" class="col-md-2 col-lg-2 control-label">ชื่อโครงงาน(ภาษาอังกฤษ)</label>
+                            <label for="prj_name_en" class="col-md-2 col-lg-2 control-label">ชื่อโครงงาน(ภาษาอังกฤษ)</label>
                             <div class="col-md-10 col-lg-10">
                             <textarea name="prj_name_en" rows="5" id="prj_name_en" class="form-control"></textarea>
                             <br>
